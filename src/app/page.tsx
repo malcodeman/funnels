@@ -54,7 +54,11 @@ export default function Home() {
           </TabPanels>
         </Tabs>
       </Box>
-      <Preview funnel={funnel} pageIndex={selectedPageIndex} />
+      <Preview
+        funnel={funnel}
+        pageIndex={selectedPageIndex}
+        selectedBlockId={selectedBlock?.id}
+      />
       <PropertiesPanel selectedBlock={selectedBlock} />
     </>
   );

@@ -16,10 +16,11 @@ import { map } from "remeda";
 type Props = {
   funnel: FunnelData;
   pageIndex: number;
+  selectedBlockId: string | undefined;
 };
 
 export function Preview(props: Props) {
-  const { funnel, pageIndex } = props;
+  const { funnel, pageIndex, selectedBlockId } = props;
   const page = funnel.pages[pageIndex];
 
   if (!page) {
@@ -29,19 +30,36 @@ export function Preview(props: Props) {
   function renderBlock(block: Block) {
     if (block.type === "text") {
       return (
-        <Text style={{ color: block.color, textAlign: block.align }}>
+        <Text
+          style={{ color: block.color, textAlign: block.align }}
+          outline={
+            selectedBlockId === block.id ? "1px solid #0071ec" : undefined
+          }
+        >
           {block.text}
         </Text>
       );
     }
 
     if (block.type === "image") {
-      return <Image src={block.src} alt={block.alt} />;
+      return (
+        <Image
+          src={block.src}
+          alt={block.alt}
+          outline={
+            selectedBlockId === block.id ? "1px solid #0071ec" : undefined
+          }
+        />
+      );
     }
 
     if (block.type === "list") {
       return (
-        <List>
+        <List
+          outline={
+            selectedBlockId === block.id ? "1px solid #0071ec" : undefined
+          }
+        >
           {map(block.items, (item) => (
             <ListItem key={item.id} display="flex" alignItems="center">
               <ListIcon as={Image} src={item.src} alt={item.title} />
@@ -55,7 +73,12 @@ export function Preview(props: Props) {
 
     if (block.type === "button") {
       return (
-        <Button style={{ color: block.color, backgroundColor: block.bgColor }}>
+        <Button
+          style={{ color: block.color, backgroundColor: block.bgColor }}
+          outline={
+            selectedBlockId === block.id ? "1px solid #0071ec" : undefined
+          }
+        >
           {block.text}
         </Button>
       );

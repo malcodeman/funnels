@@ -95,7 +95,7 @@ export function PagesPanel(props: Props) {
   }
 
   return (
-    <Accordion index={index} onChange={onChange}>
+    <Accordion index={index} onChange={onChange} pb="5">
       {funnel.pages.map((page, i) => (
         <AccordionItem key={page.id} borderTop="0" borderBottom="0">
           <AccordionButton>
