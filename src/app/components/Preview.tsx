@@ -1,5 +1,7 @@
+import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import {
+  Box,
   Button,
   Container,
   Flex,
@@ -19,6 +21,10 @@ type Props = {
 export function Preview(props: Props) {
   const { funnel, pageIndex } = props;
   const page = funnel.pages[pageIndex];
+
+  if (!page) {
+    return null;
+  }
 
   function renderBlock(block: Block) {
     if (block.type === "text") {
@@ -57,7 +63,7 @@ export function Preview(props: Props) {
   }
 
   return (
-    <Flex bgColor="white" height="100vh" pt="40px">
+    <Flex bgColor="white" height="100vh" pt={HEADER_HEIGHT}>
       <Container maxWidth="container.sm">
         <Flex
           flexDir="column"
@@ -67,10 +73,19 @@ export function Preview(props: Props) {
           color="black"
           overflowY="auto"
           style={{ backgroundColor: funnel.bgColor }}
+          position="relative"
         >
           {map(page.blocks, (block) => (
             <div key={block.id}>{renderBlock(block)}</div>
           ))}
+          <Box position="absolute" bottom="1rem" right="1rem">
+            <Text fontSize="sm">
+              Powered by{" "}
+              <Text as="span" fontWeight="bold">
+                Funnels
+              </Text>
+            </Text>
+          </Box>
         </Flex>
       </Container>
     </Flex>

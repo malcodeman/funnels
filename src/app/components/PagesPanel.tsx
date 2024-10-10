@@ -21,12 +21,13 @@ import { map } from "remeda";
 type Props = {
   funnel: FunnelData;
   index: number;
+  selectedBlock: null | Block;
   onChange: (index: number) => void;
   onSelectedBlock: (block: null | Block) => void;
 };
 
 export function PagesPanel(props: Props) {
-  const { funnel, index, onChange, onSelectedBlock } = props;
+  const { funnel, index, selectedBlock, onChange, onSelectedBlock } = props;
 
   function renderBlock(block: Block) {
     if (block.type === "text") {
@@ -37,6 +38,7 @@ export function PagesPanel(props: Props) {
           justifyContent="flex-start"
           overflowX="hidden"
           size="sm"
+          isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectedBlock(block)}
         >
           {block.text}
@@ -52,6 +54,7 @@ export function PagesPanel(props: Props) {
           justifyContent="flex-start"
           overflowX="hidden"
           size="sm"
+          isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectedBlock(block)}
         >
           {block.alt ?? "Image"}
@@ -66,6 +69,7 @@ export function PagesPanel(props: Props) {
           variant="ghost"
           justifyContent="flex-start"
           size="sm"
+          isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectedBlock(block)}
         >
           List
@@ -81,6 +85,7 @@ export function PagesPanel(props: Props) {
           justifyContent="flex-start"
           overflowX="hidden"
           size="sm"
+          isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectedBlock(block)}
         >
           {block.text}

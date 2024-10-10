@@ -1,5 +1,7 @@
+import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block } from "@/types";
 import { Box, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { Fragment } from "react";
 import { map } from "remeda";
 
 type Props = {
@@ -82,7 +84,7 @@ export function PropertiesPanel(props: Props) {
       return (
         <Flex flexDirection="column" gap="4">
           {map(block.items, (item) => (
-            <>
+            <Fragment key={item.id}>
               <FormControl>
                 <FormLabel>Title</FormLabel>
                 <Input
@@ -113,7 +115,7 @@ export function PropertiesPanel(props: Props) {
                   readOnly
                 />
               </FormControl>
-            </>
+            </Fragment>
           ))}
         </Flex>
       );
@@ -161,14 +163,15 @@ export function PropertiesPanel(props: Props) {
     <Box
       position="fixed"
       right="0"
-      top="40px"
+      top={HEADER_HEIGHT}
       bottom="0"
       width="260px"
-      height="calc(100vh - 40px)"
+      height={`calc(100vh - ${HEADER_HEIGHT})`}
       bgColor="gray.800"
       pt="2"
       px="4"
       pb="5"
+      overflowY="auto"
     >
       {renderBlock(selectedBlock)}
     </Box>

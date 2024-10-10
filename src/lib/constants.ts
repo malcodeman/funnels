@@ -1,50 +1,52 @@
 import { FunnelData } from "@/types";
+import { z } from "zod";
+import { nanoid } from "nanoid";
 
 export const FUNNEL_DATA: FunnelData = {
   name: "My awesome funnel",
   bgColor: "#F5F5F5",
   pages: [
     {
-      id: "b6b05e20d3a1486585bb889b3c5b6e9f",
+      id: nanoid(),
       blocks: [
         {
-          id: "b5e08d664867419a85c40d333ca4a00e",
+          id: nanoid(),
           type: "text",
           text: "Welcome!",
           color: "#202020",
           align: "center",
         },
         {
-          id: "9f2f25ad177843b6b7fc81811b4f0456",
+          id: nanoid(),
           type: "image",
           alt: "Welcome image",
           src: "https://images.unsplash.com/photo-1598182198871-d3f4ab4fd181?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80",
         },
         {
-          id: "b5e08d664867419a85c40d333ca4a123",
+          id: nanoid(),
           type: "text",
           text: "Check out our awesome menu!",
           color: "#202020",
           align: "center",
         },
         {
-          id: "6dc5ca19c11d4314bba0905de6c9dc07",
+          id: nanoid(),
           type: "list",
           items: [
             {
-              id: "7dc5ca19c11d4314bba0905de6c9dc08",
+              id: nanoid(),
               title: "Drinks",
               description: "Tshhh... Ahhhhh!",
               src: "https://img.icons8.com/0076FF/win10/247/kawaii-soda",
             },
             {
-              id: "8dc5ca19c11d4314bba0905de6c9dc09",
+              id: nanoid(),
               title: "Icecream",
               description: "Cool down ...",
               src: "https://img.icons8.com/0076FF/win10/247/kawaii-cupcake",
             },
             {
-              id: "9dc5ca19c11d4314bba0905de6c9dc10",
+              id: nanoid(),
               title: "Taccos",
               description: "... to heat up",
               src: "https://img.icons8.com/0076FF/win10/247/kawaii-taco",
@@ -52,7 +54,7 @@ export const FUNNEL_DATA: FunnelData = {
           ],
         },
         {
-          id: "218fb0f6146b4728ad0b19e3b1084awd",
+          id: nanoid(),
           type: "button",
           text: "Nice Menu!",
           color: "white",
@@ -61,22 +63,22 @@ export const FUNNEL_DATA: FunnelData = {
       ],
     },
     {
-      id: "5b42cc0dc973441e9c83a1970bbaf810",
+      id: nanoid(),
       blocks: [
         {
-          id: "0879f6c1d6b94be7b61d3c99543713a1",
+          id: nanoid(),
           type: "text",
           text: "Thanks for stopping by!",
           color: "#202020",
           align: "center",
         },
         {
-          id: "9f2f25ad177843b6b7fc81811b4f090c",
+          id: nanoid(),
           type: "image",
           src: "https://images.unsplash.com/photo-1578986568501-a6c637652d24?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1351&q=80",
         },
         {
-          id: "218fb0f6146b4728ad0b19e3b1084a16",
+          id: nanoid(),
           type: "button",
           text: "Visit our website!",
           color: "white",
@@ -86,3 +88,112 @@ export const FUNNEL_DATA: FunnelData = {
     },
   ],
 };
+
+export const EXTENDED_FUNNEL_DATA: FunnelData = {
+  name: "My extended funnel",
+  bgColor: "#F5F5F5",
+  pages: Array.from({ length: 12 }, (_, index) => ({
+    id: nanoid(),
+    blocks: [
+      {
+        id: nanoid(),
+        type: "text",
+        text: `Welcome to Page ${index + 1}`,
+        color: "#202020",
+        align: "center",
+      },
+      {
+        id: nanoid(),
+        type: "image",
+        alt: `Welcome image for page ${index + 1}`,
+        src: "https://images.unsplash.com/photo-1598182198871-d3f4ab4fd181?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1350&q=80",
+      },
+      {
+        id: nanoid(),
+        type: "text",
+        text: `This is an awesome feature of Page ${index + 1}`,
+        color: "#202020",
+        align: "center",
+      },
+      {
+        id: nanoid(),
+        type: "list",
+        items: [
+          {
+            id: nanoid(),
+            title: "Feature 1",
+            description: "Description of feature 1",
+            src: "https://img.icons8.com/0076FF/win10/247/kawaii-soda",
+          },
+          {
+            id: nanoid(),
+            title: "Feature 2",
+            description: "Description of feature 2",
+            src: "https://img.icons8.com/0076FF/win10/247/kawaii-cupcake",
+          },
+          {
+            id: nanoid(),
+            title: "Feature 3",
+            description: "Description of feature 3",
+            src: "https://img.icons8.com/0076FF/win10/247/kawaii-taco",
+          },
+        ],
+      },
+      {
+        id: nanoid(),
+        type: "button",
+        text: `Learn More on Page ${index + 1}`,
+        color: "white",
+        bgColor: "#0076FF",
+      },
+    ],
+  })),
+};
+
+export const FUNNEL_DATA_SCHEMA = z.object({
+  name: z.string(),
+  bgColor: z.string(),
+  pages: z.array(
+    z.object({
+      id: z.string(),
+      blocks: z.array(
+        z.union([
+          z.object({
+            id: z.string(),
+            type: z.literal("text"),
+            text: z.string(),
+            color: z.string(),
+            align: z.enum(["left", "center", "right"]),
+          }),
+          z.object({
+            id: z.string(),
+            type: z.literal("image"),
+            alt: z.string().optional(),
+            src: z.string(),
+          }),
+          z.object({
+            id: z.string(),
+            type: z.literal("list"),
+            items: z.array(
+              z.object({
+                id: z.string(),
+                title: z.string(),
+                description: z.string(),
+                src: z.string(),
+              })
+            ),
+          }),
+          z.object({
+            id: z.string(),
+            type: z.literal("button"),
+            text: z.string(),
+            color: z.string(),
+            bgColor: z.string(),
+          }),
+        ])
+      ),
+    })
+  ),
+});
+
+export const HEADER_HEIGHT = "48px";

@@ -1,5 +1,5 @@
 "use client";
-import { FUNNEL_DATA } from "@/lib/constants";
+import { FUNNEL_DATA, HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import { useState } from "react";
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
@@ -10,20 +10,26 @@ import { DesignPanel } from "./components/DesignPanel";
 import { PropertiesPanel } from "./components/PropertiesPanel";
 
 export default function Home() {
-  const [funnel] = useState<FunnelData>(FUNNEL_DATA);
+  const [funnel, setFunnel] = useState<FunnelData>(FUNNEL_DATA);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
   const [selectedBlock, setSelectedBlock] = useState<null | Block>(null);
 
+  function handleOnImport(funnel: FunnelData) {
+    setFunnel(funnel);
+    setSelectedPageIndex(1);
+    setSelectedBlock(null);
+  }
+
   return (
     <>
-      <Header name={funnel.name} />
+      <Header funnel={funnel} onImport={handleOnImport} />
       <Box
         position="fixed"
         left="0"
-        top="40px"
+        top={HEADER_HEIGHT}
         bottom="0"
         width="260px"
-        height="calc(100vh - 40px)"
+        height={`calc(100vh - ${HEADER_HEIGHT})`}
         bgColor="gray.800"
         zIndex="1"
       >
@@ -37,6 +43,7 @@ export default function Home() {
               <PagesPanel
                 funnel={funnel}
                 index={selectedPageIndex}
+                selectedBlock={selectedBlock}
                 onChange={(index) => setSelectedPageIndex(index)}
                 onSelectedBlock={(block) => setSelectedBlock(block)}
               />
