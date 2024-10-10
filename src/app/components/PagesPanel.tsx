@@ -23,11 +23,11 @@ type Props = {
   index: number;
   selectedBlock: null | Block;
   onChange: (index: number) => void;
-  onSelectedBlock: (block: null | Block) => void;
+  onSelectBlock: (block: null | Block) => void;
 };
 
 export function PagesPanel(props: Props) {
-  const { funnel, index, selectedBlock, onChange, onSelectedBlock } = props;
+  const { funnel, index, selectedBlock, onChange, onSelectBlock } = props;
 
   function renderBlock(block: Block) {
     if (block.type === "text") {
@@ -39,7 +39,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectedBlock(block)}
+          onClick={() => onSelectBlock(block)}
         >
           {block.text}
         </Button>
@@ -55,7 +55,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectedBlock(block)}
+          onClick={() => onSelectBlock(block)}
         >
           {block.alt ?? "Image"}
         </Button>
@@ -70,7 +70,7 @@ export function PagesPanel(props: Props) {
           justifyContent="flex-start"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectedBlock(block)}
+          onClick={() => onSelectBlock(block)}
         >
           List
         </Button>
@@ -86,7 +86,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectedBlock(block)}
+          onClick={() => onSelectBlock(block)}
         >
           {block.text}
         </Button>

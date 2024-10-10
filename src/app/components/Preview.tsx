@@ -17,10 +17,11 @@ type Props = {
   funnel: FunnelData;
   pageIndex: number;
   selectedBlockId: string | undefined;
+  onSelectBlock: (block: null | Block) => void;
 };
 
 export function Preview(props: Props) {
-  const { funnel, pageIndex, selectedBlockId } = props;
+  const { funnel, pageIndex, selectedBlockId, onSelectBlock } = props;
   const page = funnel.pages[pageIndex];
 
   if (!page) {
@@ -35,6 +36,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
+          onClick={() => onSelectBlock(block)}
         >
           {block.text}
         </Text>
@@ -49,6 +51,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
+          onClick={() => onSelectBlock(block)}
         />
       );
     }
@@ -59,6 +62,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
+          onClick={() => onSelectBlock(block)}
         >
           {map(block.items, (item) => (
             <ListItem key={item.id} display="flex" alignItems="center">
@@ -78,6 +82,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
+          onClick={() => onSelectBlock(block)}
         >
           {block.text}
         </Button>

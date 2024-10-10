@@ -45,7 +45,7 @@ export default function Home() {
                 index={selectedPageIndex}
                 selectedBlock={selectedBlock}
                 onChange={(index) => setSelectedPageIndex(index)}
-                onSelectedBlock={(block) => setSelectedBlock(block)}
+                onSelectBlock={(block) => setSelectedBlock(block)}
               />
             </TabPanel>
             <TabPanel>
@@ -58,6 +58,7 @@ export default function Home() {
         funnel={funnel}
         pageIndex={selectedPageIndex}
         selectedBlockId={selectedBlock?.id}
+        onSelectBlock={(block) => setSelectedBlock(block)}
       />
       <PropertiesPanel selectedBlock={selectedBlock} />
     </>
