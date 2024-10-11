@@ -24,10 +24,12 @@ type Props = {
 export function TextBlock(props: Props) {
   const { pageIndex, blockIndex, block } = props;
   const { control, setValue } = useFormContext<FunnelData>();
-  const align = useWatch({
+  const blocks = useWatch({
     control,
-    name: `pages.${pageIndex}.blocks.${blockIndex}.align`,
+    name: `pages.${pageIndex}.blocks`,
   });
+  const align =
+    blocks[blockIndex].type === "text" ? blocks[blockIndex].align : "left";
 
   return (
     <Flex flexDirection="column" gap="4">
