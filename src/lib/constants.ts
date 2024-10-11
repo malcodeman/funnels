@@ -163,7 +163,7 @@ export const FUNNEL_DATA_SCHEMA = z.object({
             type: z.literal("text"),
             text: z.string(),
             color: z.string(),
-            align: z.enum(["left", "center", "right"]),
+            align: z.enum(["left", "center", "right", "justify"]),
           }),
           z.object({
             id: z.string(),

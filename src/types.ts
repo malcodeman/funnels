@@ -3,7 +3,7 @@ export type TextBlock = {
   type: "text";
   text: string;
   color: string;
-  align: "left" | "center" | "right";
+  align: "left" | "center" | "right" | "justify";
 };
 
 export type ImageBlock = {

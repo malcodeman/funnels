@@ -1,6 +1,19 @@
 import { FunnelData, TextBlock as TextBlockType } from "@/types";
-import { Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import {
+  ButtonGroup,
+  Flex,
+  FormControl,
+  FormLabel,
+  IconButton,
+  Input,
+} from "@chakra-ui/react";
+import {
+  AlignCenterIcon,
+  AlignJustifyIcon,
+  AlignLeftIcon,
+  AlignRightIcon,
+} from "lucide-react";
+import { useFormContext, useWatch } from "react-hook-form";
 
 type Props = {
   pageIndex: number;
@@ -10,7 +23,11 @@ type Props = {
 
 export function TextBlock(props: Props) {
   const { pageIndex, blockIndex, block } = props;
-  const { control } = useFormContext<FunnelData>();
+  const { control, setValue } = useFormContext<FunnelData>();
+  const align = useWatch({
+    control,
+    name: `pages.${pageIndex}.blocks.${blockIndex}.align`,
+  });
 
   return (
     <Flex flexDirection="column" gap="4">
@@ -36,13 +53,46 @@ export function TextBlock(props: Props) {
       </FormControl>
       <FormControl>
         <FormLabel>Align</FormLabel>
-        <Input
-          key={block.id}
-          variant="filled"
-          size="sm"
-          borderRadius="md"
-          {...control.register(`pages.${pageIndex}.blocks.${blockIndex}.align`)}
-        />
+        <ButtonGroup size="sm" isAttached>
+          <IconButton
+            aria-label="Left"
+            icon={<AlignLeftIcon size={16} />}
+            isActive={align === "left"}
+            onClick={() =>
+              setValue(`pages.${pageIndex}.blocks.${blockIndex}.align`, "left")
+            }
+          />
+          <IconButton
+            aria-label="Center"
+            icon={<AlignCenterIcon size={16} />}
+            isActive={align === "center"}
+            onClick={() =>
+              setValue(
+                `pages.${pageIndex}.blocks.${blockIndex}.align`,
+                "center"
+              )
+            }
+          />
+          <IconButton
+            aria-label="Right"
+            icon={<AlignRightIcon size={16} />}
+            isActive={align === "right"}
+            onClick={() =>
+              setValue(`pages.${pageIndex}.blocks.${blockIndex}.align`, "right")
+            }
+          />
+          <IconButton
+            aria-label="Justify"
+            icon={<AlignJustifyIcon size={16} />}
+            isActive={align === "justify"}
+            onClick={() =>
+              setValue(
+                `pages.${pageIndex}.blocks.${blockIndex}.align`,
+                "justify"
+              )
+            }
+          />
+        </ButtonGroup>
       </FormControl>
     </Flex>
   );
