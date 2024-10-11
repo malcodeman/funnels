@@ -1,7 +1,6 @@
 import { useLocalStorage } from "@/hooks/useLocalStorageValue";
 import { Block, FunnelData } from "@/types";
 import {
-  Box,
   Button,
   Container,
   Flex,
@@ -25,6 +24,7 @@ export function Preview(props: Props) {
   const { selectedPageIndex, selectedBlockId, onSelectBlock } = props;
   const { control } = useFormContext<FunnelData>();
   const page = useWatch({ control, name: "pages" })[selectedPageIndex];
+  const branding = useWatch({ control, name: "branding" });
   const funnelBgColor = useWatch({ control, name: "bgColor" });
   const backgroundColor = useColorModeValue("#f5f5f5", "#191f2a");
   const isSmartphoneView = useLocalStorage("is-smartphone-view", {
@@ -118,20 +118,19 @@ export function Preview(props: Props) {
           color="black"
           overflowY="auto"
           style={{ backgroundColor: funnelBgColor }}
-          position="relative"
           transition="background-color 200ms linear"
         >
           {map(page.blocks, (block) => (
             <div key={block.id}>{renderBlock(block)}</div>
           ))}
-          <Box position="absolute" bottom="1rem" right="1rem">
-            <Text fontSize="sm">
+          {branding ? (
+            <Text fontSize="sm" textAlign="center">
               Powered by{" "}
               <Text as="span" fontWeight="bold">
                 Funnels
               </Text>
             </Text>
-          </Box>
+          ) : null}
         </Flex>
       </Container>
     </Flex>

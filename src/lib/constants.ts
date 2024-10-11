@@ -5,6 +5,7 @@ import { nanoid } from "nanoid";
 export const FUNNEL_DATA: FunnelData = {
   name: "My awesome funnel",
   bgColor: "#F5F5F5",
+  branding: true,
   pages: [
     {
       id: nanoid(),
@@ -95,6 +96,7 @@ export const FUNNEL_DATA: FunnelData = {
 export const EXTENDED_FUNNEL_DATA: FunnelData = {
   name: "My extended funnel",
   bgColor: "#F5F5F5",
+  branding: true,
   pages: Array.from({ length: 12 }, (_, index) => ({
     id: nanoid(),
     blocks: [
@@ -158,6 +160,7 @@ export const EXTENDED_FUNNEL_DATA: FunnelData = {
 export const FUNNEL_DATA_SCHEMA = z.object({
   name: z.string(),
   bgColor: z.string(),
+  branding: z.boolean(),
   pages: z.array(
     z.object({
       id: z.string(),

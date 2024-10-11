@@ -38,6 +38,7 @@ export type Block = TextBlock | ImageBlock | ListBlock | ButtonBlock;
 export type FunnelData = {
   name: string;
   bgColor: string;
+  branding: boolean;
   pages: {
     id: string;
     blocks: Block[];
