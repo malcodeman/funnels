@@ -1,4 +1,3 @@
-import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import {
   Box,
@@ -10,6 +9,7 @@ import {
   ListIcon,
   ListItem,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { map } from "remeda";
@@ -25,6 +25,7 @@ export function Preview(props: Props) {
   const { control } = useFormContext<FunnelData>();
   const page = useWatch({ control, name: "pages" })[selectedPageIndex];
   const funnelBgColor = useWatch({ control, name: "bgColor" });
+  const backgroundColor = useColorModeValue("#f5f5f5", "#191f2a");
 
   if (!page) {
     return null;
@@ -93,7 +94,7 @@ export function Preview(props: Props) {
   }
 
   return (
-    <Flex bgColor="white" height="100vh" pt={HEADER_HEIGHT}>
+    <Flex bgColor={backgroundColor} height="100vh" pt="50px">
       <Container maxWidth="container.sm">
         <Flex
           flexDir="column"

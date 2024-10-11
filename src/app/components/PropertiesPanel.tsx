@@ -1,6 +1,6 @@
 import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { ListBlock } from "./blocks/ListBlock";
 import { TextBlock } from "./blocks/TextBlock";
@@ -24,6 +24,7 @@ export function PropertiesPanel(props: Props) {
   const blockIndex = blocks.findIndex(
     (block) => block.id === selectedBlock?.id
   );
+  const backgroundColor = useColorModeValue("white", "gray.800");
 
   function renderBlock(block: null | Block) {
     if (!block) {
@@ -73,13 +74,13 @@ export function PropertiesPanel(props: Props) {
 
   return (
     <Box
+      top={HEADER_HEIGHT}
+      bgColor={backgroundColor}
+      height={`calc(100vh - ${HEADER_HEIGHT})`}
       position="fixed"
       right="0"
-      top={HEADER_HEIGHT}
       bottom="0"
       width="260px"
-      height={`calc(100vh - ${HEADER_HEIGHT})`}
-      bgColor="gray.800"
       pt="2"
       px="4"
       pb="5"

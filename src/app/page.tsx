@@ -2,7 +2,15 @@
 import { FUNNEL_DATA, HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import { useState } from "react";
-import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import {
+  Box,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { Preview } from "./components/Preview";
 import { Header } from "./components/Header";
@@ -21,6 +29,7 @@ export default function Home() {
     control: form.control,
     name: "pages",
   });
+  const backgroundColor = useColorModeValue("white", "gray.800");
 
   function handleOnImport(funnel: FunnelData) {
     form.reset(funnel);
@@ -41,13 +50,13 @@ export default function Home() {
         />
       </FormProvider>
       <Box
+        top={HEADER_HEIGHT}
+        bgColor={backgroundColor}
+        height={`calc(100vh - ${HEADER_HEIGHT})`}
         position="fixed"
         left="0"
-        top={HEADER_HEIGHT}
         bottom="0"
         width="260px"
-        height={`calc(100vh - ${HEADER_HEIGHT})`}
-        bgColor="gray.800"
         zIndex="1"
       >
         <Tabs isFitted height="full">
