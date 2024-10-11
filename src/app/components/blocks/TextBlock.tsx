@@ -6,6 +6,8 @@ import {
   FormLabel,
   IconButton,
   Input,
+  InputGroup,
+  InputRightAddon,
 } from "@chakra-ui/react";
 import {
   AlignCenterIcon,
@@ -52,6 +54,21 @@ export function TextBlock(props: Props) {
           borderRadius="md"
           {...control.register(`pages.${pageIndex}.blocks.${blockIndex}.color`)}
         />
+      </FormControl>
+      <FormControl>
+        <FormLabel>Size</FormLabel>
+        <InputGroup size="sm">
+          <Input
+            key={block.id}
+            variant="filled"
+            size="sm"
+            borderRadius="md"
+            {...control.register(
+              `pages.${pageIndex}.blocks.${blockIndex}.size`
+            )}
+          />
+          <InputRightAddon>px</InputRightAddon>
+        </InputGroup>
       </FormControl>
       <FormControl>
         <FormLabel>Align</FormLabel>

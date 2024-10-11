@@ -4,6 +4,7 @@ export type TextBlock = {
   text: string;
   color: string;
   align: "left" | "center" | "right" | "justify";
+  size: string;
 };
 
 export type ImageBlock = {

@@ -15,6 +15,7 @@ export const FUNNEL_DATA: FunnelData = {
           text: "Welcome!",
           color: "#202020",
           align: "center",
+          size: "14",
         },
         {
           id: nanoid(),
@@ -28,6 +29,7 @@ export const FUNNEL_DATA: FunnelData = {
           text: "Check out our awesome menu!",
           color: "#202020",
           align: "center",
+          size: "14",
         },
         {
           id: nanoid(),
@@ -71,6 +73,7 @@ export const FUNNEL_DATA: FunnelData = {
           text: "Thanks for stopping by!",
           color: "#202020",
           align: "center",
+          size: "14",
         },
         {
           id: nanoid(),
@@ -101,6 +104,7 @@ export const EXTENDED_FUNNEL_DATA: FunnelData = {
         text: `Welcome to Page ${index + 1}`,
         color: "#202020",
         align: "center",
+        size: "14",
       },
       {
         id: nanoid(),
@@ -114,6 +118,7 @@ export const EXTENDED_FUNNEL_DATA: FunnelData = {
         text: `This is an awesome feature of Page ${index + 1}`,
         color: "#202020",
         align: "center",
+        size: "14",
       },
       {
         id: nanoid(),
@@ -164,6 +169,7 @@ export const FUNNEL_DATA_SCHEMA = z.object({
             text: z.string(),
             color: z.string(),
             align: z.enum(["left", "center", "right", "justify"]),
+            size: z.string(),
           }),
           z.object({
             id: z.string(),

@@ -49,6 +49,7 @@ export function Header(props: Props) {
               text: "Text",
               color: "black",
               align: "left",
+              size: "14",
               id: nanoid(),
             });
           }}

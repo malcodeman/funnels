@@ -13,7 +13,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { isNullish, map } from "remeda";
+import { isEmpty, isNullish, map } from "remeda";
 
 type Props = {
   selectedPageIndex: number;
@@ -39,7 +39,11 @@ export function Preview(props: Props) {
     if (block.type === "text") {
       return (
         <Text
-          style={{ color: block.color, textAlign: block.align }}
+          style={{
+            color: block.color,
+            textAlign: block.align,
+            fontSize: isEmpty(block.size) ? "14px" : `${block.size}px`,
+          }}
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
