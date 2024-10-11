@@ -1,7 +1,7 @@
 import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import { Box } from "@chakra-ui/react";
-import { useFieldArray, useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { ListBlock } from "./blocks/ListBlock";
 import { TextBlock } from "./blocks/TextBlock";
 import { ImageBlock } from "./blocks/ImageBlock";
@@ -15,7 +15,7 @@ type Props = {
 export function PropertiesPanel(props: Props) {
   const { selectedPageIndex, selectedBlock } = props;
   const { control } = useFormContext<FunnelData>();
-  const { fields: pages } = useFieldArray({
+  const pages = useWatch({
     control,
     name: "pages",
   });

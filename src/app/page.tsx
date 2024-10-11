@@ -17,7 +17,7 @@ export default function Home() {
   const form = useForm<FunnelData>({
     defaultValues: FUNNEL_DATA,
   });
-  const { fields } = useFieldArray({
+  const { fields: pages } = useFieldArray({
     control: form.control,
     name: "pages",
   });
@@ -28,14 +28,17 @@ export default function Home() {
     setSelectedBlock(null);
   }
 
-  if (fields.length === 0) {
+  if (pages.length === 0) {
     return <EmptyState onImport={handleOnImport} />;
   }
 
   return (
     <>
       <FormProvider {...form}>
-        <Header onImport={handleOnImport} />
+        <Header
+          selectedPageIndex={selectedPageIndex}
+          onImport={handleOnImport}
+        />
       </FormProvider>
       <Box
         position="fixed"
@@ -54,13 +57,14 @@ export default function Home() {
           </TabList>
           <TabPanels height="full" overflowY="scroll" pb="42px">
             <TabPanel padding="0">
-              <PagesPanel
-                fields={fields}
-                selectedPageIndex={selectedPageIndex}
-                selectedBlock={selectedBlock}
-                onSelectPage={(index) => setSelectedPageIndex(index)}
-                onSelectBlock={(block) => setSelectedBlock(block)}
-              />
+              <FormProvider {...form}>
+                <PagesPanel
+                  selectedPageIndex={selectedPageIndex}
+                  selectedBlock={selectedBlock}
+                  onSelectPage={(index) => setSelectedPageIndex(index)}
+                  onSelectBlock={(block) => setSelectedBlock(block)}
+                />
+              </FormProvider>
             </TabPanel>
             <TabPanel>
               <FormProvider {...form}>

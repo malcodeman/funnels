@@ -5,6 +5,7 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Box,
   Button,
   Flex,
   Text,
@@ -13,14 +14,15 @@ import {
   ImageIcon,
   ListIcon,
   MousePointerClickIcon,
+  PlusIcon,
   TextIcon,
 } from "lucide-react";
+import { nanoid } from "nanoid";
 import { Fragment } from "react";
-import { FieldArrayWithId } from "react-hook-form";
-import { map } from "remeda";
+import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
+import { isEmpty, map } from "remeda";
 
 type Props = {
-  fields: FieldArrayWithId<FunnelData, "pages", "id">[];
   selectedPageIndex: number;
   selectedBlock: null | Block;
   onSelectPage: (index: number) => void;
@@ -28,13 +30,17 @@ type Props = {
 };
 
 export function PagesPanel(props: Props) {
-  const {
-    fields,
-    selectedPageIndex,
-    selectedBlock,
-    onSelectPage,
-    onSelectBlock,
-  } = props;
+  const { selectedPageIndex, selectedBlock, onSelectPage, onSelectBlock } =
+    props;
+  const { control } = useFormContext<FunnelData>();
+  const { append } = useFieldArray({
+    control,
+    name: "pages",
+  });
+  const pages = useWatch({
+    control,
+    name: "pages",
+  });
 
   function renderBlock(block: Block) {
     if (block.type === "text") {
@@ -48,7 +54,7 @@ export function PagesPanel(props: Props) {
           isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectBlock(block)}
         >
-          {block.text}
+          {isEmpty(block.text) ? "Text" : block.text}
         </Button>
       );
     }
@@ -64,7 +70,7 @@ export function PagesPanel(props: Props) {
           isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectBlock(block)}
         >
-          {block.alt ?? "Image"}
+          {isEmpty(block.alt) ? "Image" : block.alt}
         </Button>
       );
     }
@@ -95,7 +101,7 @@ export function PagesPanel(props: Props) {
           isActive={selectedBlock?.id === block.id}
           onClick={() => onSelectBlock(block)}
         >
-          {block.text}
+          {isEmpty(block.text) ? "Button" : block.text}
         </Button>
       );
     }
@@ -103,7 +109,22 @@ export function PagesPanel(props: Props) {
 
   return (
     <Accordion index={selectedPageIndex} onChange={onSelectPage} pb="5">
-      {fields.map((page, i) => (
+      <Box paddingX="4" paddingY="2">
+        <Button
+          size="sm"
+          width="full"
+          leftIcon={<PlusIcon size={16} />}
+          onClick={() =>
+            append({
+              id: nanoid(),
+              blocks: [],
+            })
+          }
+        >
+          Add page
+        </Button>
+      </Box>
+      {pages.map((page, i) => (
         <AccordionItem key={page.id} borderTop="0" borderBottom="0">
           <AccordionButton>
             <Text flexGrow="1" textAlign="left">
@@ -112,6 +133,9 @@ export function PagesPanel(props: Props) {
             <AccordionIcon size={10} />
           </AccordionButton>
           <AccordionPanel>
+            {page.blocks.length === 0 ? (
+              <Text fontSize="sm">Empty page </Text>
+            ) : null}
             <Flex flexDirection="column" gap="4">
               {map(page.blocks, (block) => (
                 <Fragment key={block.id}>{renderBlock(block)}</Fragment>
