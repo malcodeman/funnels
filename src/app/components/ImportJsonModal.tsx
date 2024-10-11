@@ -1,6 +1,6 @@
 import { FileUploader } from "@/components/FileUploader";
-import { FUNNEL_DATA_SCHEMA } from "@/lib/constants";
-import { file2Text } from "@/lib/utils";
+import { FILE_UPLOAD_ACCEPT } from "@/lib/constants";
+import { useJsonUpload } from "@/lib/hooks";
 import { FunnelData } from "@/types";
 import {
   Modal,
@@ -9,10 +9,7 @@ import {
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  useBoolean,
-  useToast,
 } from "@chakra-ui/react";
-import { ZodError } from "zod";
 
 type Props = {
   isOpen: boolean;
@@ -22,35 +19,12 @@ type Props = {
 
 export function ImportJsonModal(props: Props) {
   const { isOpen, onClose, onImport } = props;
-  const [isLoading, setIsLoading] = useBoolean();
-  const toast = useToast();
-
-  async function handleOnDrop(acceptedFiles: File[]) {
-    try {
-      setIsLoading.on();
-      const text = await file2Text(acceptedFiles[0]);
-      const funnel = FUNNEL_DATA_SCHEMA.parse(JSON.parse(text));
-
+  const { isLoading, onDrop } = useJsonUpload({
+    onImport: (funnel) => {
       onImport(funnel);
       onClose();
-    } catch (err) {
-      if (err instanceof ZodError) {
-        toast({
-          description: "Invalid JSON format.",
-          status: "error",
-          isClosable: true,
-        });
-      } else {
-        toast({
-          description: "Something went wrong.",
-          status: "error",
-          isClosable: true,
-        });
-      }
-    } finally {
-      setIsLoading.off();
-    }
-  }
+    },
+  });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -60,10 +34,8 @@ export function ImportJsonModal(props: Props) {
         <ModalCloseButton />
         <ModalBody>
           <FileUploader
-            onDrop={handleOnDrop}
-            accept={{
-              "application/json": [".json"],
-            }}
+            onDrop={onDrop}
+            accept={FILE_UPLOAD_ACCEPT}
             isLoading={isLoading}
           />
         </ModalBody>

@@ -197,3 +197,5 @@ export const FUNNEL_DATA_SCHEMA = z.object({
 });
 
 export const HEADER_HEIGHT = "48px";
+
+export const FILE_UPLOAD_ACCEPT = { "application/json": [".json"] };

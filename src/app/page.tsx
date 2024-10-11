@@ -1,5 +1,5 @@
 "use client";
-import { FUNNEL_DATA, HEADER_HEIGHT } from "@/lib/constants";
+import { HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import { useState } from "react";
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
@@ -8,9 +8,10 @@ import { Header } from "./components/Header";
 import { PagesPanel } from "./components/PagesPanel";
 import { DesignPanel } from "./components/DesignPanel";
 import { PropertiesPanel } from "./components/PropertiesPanel";
+import { EmptyState } from "./components/EmptyState";
 
 export default function Home() {
-  const [funnel, setFunnel] = useState<FunnelData>(FUNNEL_DATA);
+  const [funnel, setFunnel] = useState<null | FunnelData>(null);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
   const [selectedBlock, setSelectedBlock] = useState<null | Block>(null);
 
@@ -18,6 +19,10 @@ export default function Home() {
     setFunnel(funnel);
     setSelectedPageIndex(1);
     setSelectedBlock(null);
+  }
+
+  if (!funnel) {
+    return <EmptyState onImport={handleOnImport} />;
   }
 
   return (
