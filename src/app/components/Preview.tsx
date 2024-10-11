@@ -11,18 +11,20 @@ import {
   ListItem,
   Text,
 } from "@chakra-ui/react";
+import { useFormContext, useWatch } from "react-hook-form";
 import { map } from "remeda";
 
 type Props = {
-  funnel: FunnelData;
-  pageIndex: number;
+  selectedPageIndex: number;
   selectedBlockId: string | undefined;
   onSelectBlock: (block: null | Block) => void;
 };
 
 export function Preview(props: Props) {
-  const { funnel, pageIndex, selectedBlockId, onSelectBlock } = props;
-  const page = funnel.pages[pageIndex];
+  const { selectedPageIndex, selectedBlockId, onSelectBlock } = props;
+  const { control } = useFormContext<FunnelData>();
+  const page = useWatch({ control, name: "pages" })[selectedPageIndex];
+  const funnelBgColor = useWatch({ control, name: "bgColor" });
 
   if (!page) {
     return null;
@@ -66,7 +68,7 @@ export function Preview(props: Props) {
         >
           {map(block.items, (item) => (
             <ListItem key={item.id} display="flex" alignItems="center">
-              <ListIcon as={Image} src={item.src} alt={item.title} />
+              <ListIcon as={Image} src={item.src} />
               <Text>{item.title}</Text>
               <Text opacity="0.8">{item.description}</Text>
             </ListItem>
@@ -100,7 +102,7 @@ export function Preview(props: Props) {
           padding="2"
           color="black"
           overflowY="auto"
-          style={{ backgroundColor: funnel.bgColor }}
+          style={{ backgroundColor: funnelBgColor }}
           position="relative"
         >
           {map(page.blocks, (block) => (

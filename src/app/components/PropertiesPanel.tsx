@@ -1,15 +1,29 @@
 import { HEADER_HEIGHT } from "@/lib/constants";
-import { Block } from "@/types";
-import { Box, Flex, FormControl, FormLabel, Input } from "@chakra-ui/react";
-import { Fragment } from "react";
-import { map } from "remeda";
+import { Block, FunnelData } from "@/types";
+import { Box } from "@chakra-ui/react";
+import { useFieldArray, useFormContext } from "react-hook-form";
+import { ListBlock } from "./blocks/ListBlock";
+import { TextBlock } from "./blocks/TextBlock";
+import { ImageBlock } from "./blocks/ImageBlock";
+import { ButtonBlock } from "./blocks/ButtonBlock";
 
 type Props = {
+  selectedPageIndex: number;
   selectedBlock: null | Block;
 };
 
 export function PropertiesPanel(props: Props) {
-  const { selectedBlock } = props;
+  const { selectedPageIndex, selectedBlock } = props;
+  const { control } = useFormContext<FunnelData>();
+  const { fields: pages } = useFieldArray({
+    control,
+    name: "pages",
+  });
+  const blocks = pages[selectedPageIndex].blocks;
+  const block = blocks.find((block) => block.id === selectedBlock?.id);
+  const blockIndex = blocks.findIndex(
+    (block) => block.id === selectedBlock?.id
+  );
 
   function renderBlock(block: null | Block) {
     if (!block) {
@@ -18,143 +32,41 @@ export function PropertiesPanel(props: Props) {
 
     if (block.type === "text") {
       return (
-        <Flex flexDirection="column" gap="4">
-          <FormControl>
-            <FormLabel>Text</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.text}
-              readOnly
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Color</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.color}
-              readOnly
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Align</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.align}
-              readOnly
-            />
-          </FormControl>
-        </Flex>
+        <TextBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
       );
     }
 
     if (block.type === "image") {
       return (
-        <Flex flexDirection="column" gap="4">
-          <FormControl>
-            <FormLabel>Source</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.src}
-              readOnly
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Alt</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.alt}
-              readOnly
-            />
-          </FormControl>
-        </Flex>
+        <ImageBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
       );
     }
 
     if (block.type === "list") {
       return (
-        <Flex flexDirection="column" gap="4">
-          {map(block.items, (item) => (
-            <Fragment key={item.id}>
-              <FormControl>
-                <FormLabel>Title</FormLabel>
-                <Input
-                  variant="filled"
-                  size="sm"
-                  borderRadius="md"
-                  value={item.title}
-                  readOnly
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Description</FormLabel>
-                <Input
-                  variant="filled"
-                  size="sm"
-                  borderRadius="md"
-                  value={item.description}
-                  readOnly
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Icon</FormLabel>
-                <Input
-                  variant="filled"
-                  size="sm"
-                  borderRadius="md"
-                  value={item.src}
-                  readOnly
-                />
-              </FormControl>
-            </Fragment>
-          ))}
-        </Flex>
+        <ListBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
       );
     }
 
     if (block.type === "button") {
       return (
-        <Flex flexDirection="column" gap="4">
-          <FormControl>
-            <FormLabel>Text</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.text}
-              readOnly
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Color</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.color}
-              readOnly
-            />
-          </FormControl>
-          <FormControl>
-            <FormLabel>Background color</FormLabel>
-            <Input
-              variant="filled"
-              size="sm"
-              borderRadius="md"
-              value={block.bgColor}
-              readOnly
-            />
-          </FormControl>
-        </Flex>
+        <ButtonBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
       );
     }
   }
@@ -173,7 +85,7 @@ export function PropertiesPanel(props: Props) {
       pb="5"
       overflowY="auto"
     >
-      {renderBlock(selectedBlock)}
+      {block ? renderBlock(block) : null}
     </Box>
   );
 }

@@ -18,6 +18,7 @@ import {
   WorkflowIcon,
 } from "lucide-react";
 import { ImportJsonModal } from "./ImportJsonModal";
+import { useFormContext, useWatch } from "react-hook-form";
 
 function ImportJsonMenuItem(props: { onImport: (funnel: FunnelData) => void }) {
   const { onImport } = props;
@@ -38,12 +39,13 @@ function ImportJsonMenuItem(props: { onImport: (funnel: FunnelData) => void }) {
 }
 
 type Props = {
-  funnel: FunnelData;
   onImport: (funnel: FunnelData) => void;
 };
 
 export function Header(props: Props) {
-  const { funnel, onImport } = props;
+  const { onImport } = props;
+  const { getValues, control } = useFormContext<FunnelData>();
+  const name = useWatch({ control, name: "name" });
 
   return (
     <Flex
@@ -69,13 +71,13 @@ export function Header(props: Props) {
           <ImportJsonMenuItem onImport={onImport} />
           <MenuItem
             icon={<DownloadIcon size={16} />}
-            onClick={() => exportAsJson(funnel)}
+            onClick={() => exportAsJson(getValues())}
           >
             Export JSON
           </MenuItem>
         </MenuList>
       </Menu>
-      <Text>{funnel.name}</Text>
+      <Text>{name}</Text>
       <Box />
     </Flex>
   );

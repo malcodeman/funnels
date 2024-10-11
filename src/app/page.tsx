@@ -1,8 +1,9 @@
 "use client";
-import { HEADER_HEIGHT } from "@/lib/constants";
+import { FUNNEL_DATA, HEADER_HEIGHT } from "@/lib/constants";
 import { Block, FunnelData } from "@/types";
 import { useState } from "react";
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import { Preview } from "./components/Preview";
 import { Header } from "./components/Header";
 import { PagesPanel } from "./components/PagesPanel";
@@ -11,23 +12,31 @@ import { PropertiesPanel } from "./components/PropertiesPanel";
 import { EmptyState } from "./components/EmptyState";
 
 export default function Home() {
-  const [funnel, setFunnel] = useState<null | FunnelData>(null);
   const [selectedPageIndex, setSelectedPageIndex] = useState(1);
   const [selectedBlock, setSelectedBlock] = useState<null | Block>(null);
+  const form = useForm<FunnelData>({
+    defaultValues: FUNNEL_DATA,
+  });
+  const { fields } = useFieldArray({
+    control: form.control,
+    name: "pages",
+  });
 
   function handleOnImport(funnel: FunnelData) {
-    setFunnel(funnel);
+    form.reset(funnel);
     setSelectedPageIndex(1);
     setSelectedBlock(null);
   }
 
-  if (!funnel) {
+  if (fields.length === 0) {
     return <EmptyState onImport={handleOnImport} />;
   }
 
   return (
     <>
-      <Header funnel={funnel} onImport={handleOnImport} />
+      <FormProvider {...form}>
+        <Header onImport={handleOnImport} />
+      </FormProvider>
       <Box
         position="fixed"
         left="0"
@@ -46,26 +55,34 @@ export default function Home() {
           <TabPanels height="full" overflowY="scroll" pb="42px">
             <TabPanel padding="0">
               <PagesPanel
-                funnel={funnel}
-                index={selectedPageIndex}
+                fields={fields}
+                selectedPageIndex={selectedPageIndex}
                 selectedBlock={selectedBlock}
-                onChange={(index) => setSelectedPageIndex(index)}
+                onSelectPage={(index) => setSelectedPageIndex(index)}
                 onSelectBlock={(block) => setSelectedBlock(block)}
               />
             </TabPanel>
             <TabPanel>
-              <DesignPanel funnel={funnel} />
+              <FormProvider {...form}>
+                <DesignPanel />
+              </FormProvider>
             </TabPanel>
           </TabPanels>
         </Tabs>
       </Box>
-      <Preview
-        funnel={funnel}
-        pageIndex={selectedPageIndex}
-        selectedBlockId={selectedBlock?.id}
-        onSelectBlock={(block) => setSelectedBlock(block)}
-      />
-      <PropertiesPanel selectedBlock={selectedBlock} />
+      <FormProvider {...form}>
+        <Preview
+          selectedPageIndex={selectedPageIndex}
+          selectedBlockId={selectedBlock?.id}
+          onSelectBlock={(block) => setSelectedBlock(block)}
+        />
+      </FormProvider>
+      <FormProvider {...form}>
+        <PropertiesPanel
+          selectedPageIndex={selectedPageIndex}
+          selectedBlock={selectedBlock}
+        />
+      </FormProvider>
     </>
   );
 }

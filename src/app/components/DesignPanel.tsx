@@ -1,12 +1,9 @@
 import { FunnelData } from "@/types";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import { useFormContext } from "react-hook-form";
 
-type Props = {
-  funnel: FunnelData;
-};
-
-export function DesignPanel(props: Props) {
-  const { funnel } = props;
+export function DesignPanel() {
+  const { register } = useFormContext<FunnelData>();
 
   return (
     <>
@@ -16,8 +13,7 @@ export function DesignPanel(props: Props) {
           variant="filled"
           size="sm"
           borderRadius="md"
-          value={funnel.bgColor}
-          readOnly
+          {...register("bgColor")}
         />
       </FormControl>
     </>

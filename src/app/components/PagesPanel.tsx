@@ -16,18 +16,25 @@ import {
   TextIcon,
 } from "lucide-react";
 import { Fragment } from "react";
+import { FieldArrayWithId } from "react-hook-form";
 import { map } from "remeda";
 
 type Props = {
-  funnel: FunnelData;
-  index: number;
+  fields: FieldArrayWithId<FunnelData, "pages", "id">[];
+  selectedPageIndex: number;
   selectedBlock: null | Block;
-  onChange: (index: number) => void;
+  onSelectPage: (index: number) => void;
   onSelectBlock: (block: null | Block) => void;
 };
 
 export function PagesPanel(props: Props) {
-  const { funnel, index, selectedBlock, onChange, onSelectBlock } = props;
+  const {
+    fields,
+    selectedPageIndex,
+    selectedBlock,
+    onSelectPage,
+    onSelectBlock,
+  } = props;
 
   function renderBlock(block: Block) {
     if (block.type === "text") {
@@ -95,8 +102,8 @@ export function PagesPanel(props: Props) {
   }
 
   return (
-    <Accordion index={index} onChange={onChange} pb="5">
-      {funnel.pages.map((page, i) => (
+    <Accordion index={selectedPageIndex} onChange={onSelectPage} pb="5">
+      {fields.map((page, i) => (
         <AccordionItem key={page.id} borderTop="0" borderBottom="0">
           <AccordionButton>
             <Text flexGrow="1" textAlign="left">
