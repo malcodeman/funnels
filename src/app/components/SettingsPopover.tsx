@@ -1,8 +1,10 @@
 import {
   Button,
+  ButtonGroup,
   Divider,
   FormControl,
   FormLabel,
+  IconButton,
   Popover,
   PopoverBody,
   PopoverContent,
@@ -11,11 +13,18 @@ import {
   useBoolean,
   useColorMode,
 } from "@chakra-ui/react";
-import { DownloadIcon, ImportIcon, SettingsIcon } from "lucide-react";
+import {
+  DownloadIcon,
+  ImportIcon,
+  LaptopIcon,
+  SettingsIcon,
+  SmartphoneIcon,
+} from "lucide-react";
 import { ImportJsonModal } from "./ImportJsonModal";
 import { exportAsJson } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { FunnelData } from "@/types";
+import { useLocalStorage } from "@/hooks/useLocalStorageValue";
 
 type Props = {
   onImport: (funnel: FunnelData) => void;
@@ -26,6 +35,9 @@ export function SettingsPopover(props: Props) {
   const { colorMode, toggleColorMode } = useColorMode();
   const { getValues } = useFormContext<FunnelData>();
   const [isOpen, setIsOpen] = useBoolean();
+  const isSmartphoneView = useLocalStorage("is-smartphone-view", {
+    defaultValue: true,
+  });
 
   return (
     <>
@@ -39,7 +51,7 @@ export function SettingsPopover(props: Props) {
           <PopoverBody>
             <FormControl
               mb="2"
-              display={{ base: "none", lg: "flex" }}
+              display="flex"
               alignItems="center"
               justifyContent="space-between"
             >
@@ -58,6 +70,35 @@ export function SettingsPopover(props: Props) {
                 onChange={toggleColorMode}
                 id="is-dark-mode"
               />
+            </FormControl>
+            <FormControl
+              mb="2"
+              display="flex"
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <FormLabel
+                mb="0"
+                marginInlineEnd="0"
+                paddingInlineEnd="3"
+                width="full"
+              >
+                View
+              </FormLabel>
+              <ButtonGroup size="sm" isAttached>
+                <IconButton
+                  aria-label="Smartphone"
+                  icon={<SmartphoneIcon size={16} />}
+                  isActive={isSmartphoneView.value}
+                  onClick={() => isSmartphoneView.set(true)}
+                />
+                <IconButton
+                  aria-label="Laptop"
+                  icon={<LaptopIcon size={16} />}
+                  isActive={!isSmartphoneView.value}
+                  onClick={() => isSmartphoneView.set(false)}
+                />
+              </ButtonGroup>
             </FormControl>
             <Divider marginY="2" />
             <Button

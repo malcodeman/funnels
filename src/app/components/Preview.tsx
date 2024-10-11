@@ -1,3 +1,4 @@
+import { useLocalStorage } from "@/hooks/useLocalStorageValue";
 import { Block, FunnelData } from "@/types";
 import {
   Box,
@@ -26,6 +27,9 @@ export function Preview(props: Props) {
   const page = useWatch({ control, name: "pages" })[selectedPageIndex];
   const funnelBgColor = useWatch({ control, name: "bgColor" });
   const backgroundColor = useColorModeValue("#f5f5f5", "#191f2a");
+  const isSmartphoneView = useLocalStorage("is-smartphone-view", {
+    defaultValue: true,
+  });
 
   if (!page) {
     return null;
@@ -95,7 +99,7 @@ export function Preview(props: Props) {
 
   return (
     <Flex bgColor={backgroundColor} height="100vh" pt="50px">
-      <Container maxWidth="container.sm">
+      <Container maxWidth={isSmartphoneView.value ? "480px" : "1280px"}>
         <Flex
           flexDir="column"
           height="full"
