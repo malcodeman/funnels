@@ -13,7 +13,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { map } from "remeda";
+import { isNullish, map } from "remeda";
 
 type Props = {
   selectedPageIndex: number;
@@ -99,7 +99,13 @@ export function Preview(props: Props) {
 
   return (
     <Flex bgColor={backgroundColor} height="100vh" pt="50px">
-      <Container maxWidth={isSmartphoneView.value ? "480px" : "1280px"}>
+      <Container
+        maxWidth={
+          isSmartphoneView.value || isNullish(isSmartphoneView.value)
+            ? "480px"
+            : "1280px"
+        }
+      >
         <Flex
           flexDir="column"
           height="full"
@@ -109,6 +115,7 @@ export function Preview(props: Props) {
           overflowY="auto"
           style={{ backgroundColor: funnelBgColor }}
           position="relative"
+          transition="background-color 200ms linear"
         >
           {map(page.blocks, (block) => (
             <div key={block.id}>{renderBlock(block)}</div>
