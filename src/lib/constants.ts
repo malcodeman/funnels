@@ -199,6 +199,16 @@ export const FUNNEL_DATA_SCHEMA = z.object({
             color: z.string(),
             bgColor: z.string(),
           }),
+          z.object({
+            id: z.string(),
+            type: z.literal("video"),
+            src: z.string(),
+          }),
+          z.object({
+            id: z.string(),
+            type: z.literal("loom"),
+            src: z.string(),
+          }),
         ])
       ),
     })
