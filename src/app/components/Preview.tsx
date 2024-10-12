@@ -113,9 +113,8 @@ export function Preview(props: Props) {
         <Flex
           flexDir="column"
           height="full"
-          gap="2"
+          gap="4"
           padding="2"
-          color="black"
           overflowY="auto"
           style={{ backgroundColor: funnelBgColor }}
           transition="background-color 200ms linear"

@@ -1,9 +1,9 @@
 import { FunnelData } from "@/types";
-import { Button, Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
-import { ImageIcon, TextIcon, WorkflowIcon } from "lucide-react";
-import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
-import { nanoid } from "nanoid";
+import { Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
+import { WorkflowIcon } from "lucide-react";
+import { useFormContext, useWatch } from "react-hook-form";
 import { SettingsPopover } from "./SettingsPopover";
+import { InsertBlock } from "./InsertBlock";
 
 type Props = {
   selectedPageIndex: number;
@@ -14,10 +14,6 @@ export function Header(props: Props) {
   const { selectedPageIndex, onImport } = props;
   const { control } = useFormContext<FunnelData>();
   const name = useWatch({ control, name: "name" });
-  const { append } = useFieldArray({
-    control,
-    name: `pages.${selectedPageIndex}.blocks`,
-  });
   const backgroundColor = useColorModeValue("white", "gray.800");
   const boxShadow = useColorModeValue(
     "rgba(0, 0, 0, 0.03) 0px 2px 0px 0px",
@@ -40,35 +36,7 @@ export function Header(props: Props) {
         {name}
       </GridItem>
       <GridItem display="flex" justifyContent="center" gap="2">
-        <Button
-          size="sm"
-          leftIcon={<TextIcon size={16} />}
-          onClick={() => {
-            append({
-              type: "text",
-              text: "Text",
-              color: "black",
-              align: "left",
-              size: "14",
-              id: nanoid(),
-            });
-          }}
-        >
-          Text
-        </Button>
-        <Button
-          size="sm"
-          leftIcon={<ImageIcon size={16} />}
-          onClick={() => {
-            append({
-              type: "image",
-              src: "",
-              id: nanoid(),
-            });
-          }}
-        >
-          Image
-        </Button>
+        <InsertBlock selectedPageIndex={selectedPageIndex} />
       </GridItem>
       <GridItem display="flex" justifyContent="flex-end">
         <SettingsPopover onImport={onImport} />
