@@ -1,6 +1,6 @@
 import { FileUploader } from "@/components/FileUploader";
 import { FILE_UPLOAD_ACCEPT } from "@/lib/constants";
-import { useJsonUpload } from "@/lib/hooks";
+import { useJsonUpload } from "@/hooks/useJsonUpload";
 import { FunnelData } from "@/types";
 import {
   Modal,

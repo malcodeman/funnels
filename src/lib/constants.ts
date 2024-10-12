@@ -160,7 +160,7 @@ export const EXTENDED_FUNNEL_DATA: FunnelData = {
 export const FUNNEL_DATA_SCHEMA = z.object({
   name: z.string(),
   bgColor: z.string(),
-  branding: z.boolean(),
+  branding: z.boolean().optional(),
   pages: z.array(
     z.object({
       id: z.string(),
@@ -172,7 +172,7 @@ export const FUNNEL_DATA_SCHEMA = z.object({
             text: z.string(),
             color: z.string(),
             align: z.enum(["left", "center", "right", "justify"]),
-            size: z.string(),
+            size: z.string().optional(),
           }),
           z.object({
             id: z.string(),

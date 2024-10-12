@@ -30,6 +30,7 @@ export function Header(props: Props) {
       width="full"
       padding="2"
       zIndex="2"
+      gridGap="4"
     >
       <GridItem display="flex" gap="2" alignItems="center">
         <WorkflowIcon size={16} color="#0071ec" />

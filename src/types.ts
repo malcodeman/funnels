@@ -4,7 +4,7 @@ export type TextBlock = {
   text: string;
   color: string;
   align: "left" | "center" | "right" | "justify";
-  size: string;
+  size?: string;
 };
 
 export type ImageBlock = {
@@ -56,7 +56,7 @@ export type Block =
 export type FunnelData = {
   name: string;
   bgColor: string;
-  branding: boolean;
+  branding?: boolean;
   pages: {
     id: string;
     blocks: Block[];
