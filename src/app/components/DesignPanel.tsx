@@ -37,6 +37,7 @@ export function DesignPanel() {
           isChecked={branding}
           onChange={() => setValue("branding", !branding)}
           id="branding"
+          data-testid="branding-switch"
         />
       </FormControl>
       <Divider marginY="2" />

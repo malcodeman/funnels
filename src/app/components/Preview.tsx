@@ -124,7 +124,7 @@ export function Preview(props: Props) {
             <div key={block.id}>{renderBlock(block)}</div>
           ))}
           {branding ? (
-            <Text fontSize="sm" textAlign="center">
+            <Text fontSize="sm" textAlign="center" data-testid="branding-text">
               Powered by{" "}
               <Text as="span" fontWeight="bold">
                 Funnels

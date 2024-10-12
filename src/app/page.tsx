@@ -61,8 +61,8 @@ export default function Home() {
       >
         <Tabs isFitted height="full">
           <TabList>
-            <Tab>Pages</Tab>
-            <Tab>Design</Tab>
+            <Tab data-testid="pages-tab">Pages</Tab>
+            <Tab data-testid="design-tab">Design</Tab>
           </TabList>
           <TabPanels height="full" overflowY="scroll" pb="42px">
             <TabPanel padding="0">

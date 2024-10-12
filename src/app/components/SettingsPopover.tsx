@@ -43,7 +43,11 @@ export function SettingsPopover(props: Props) {
     <>
       <Popover placement="bottom-start">
         <PopoverTrigger>
-          <Button size="sm" leftIcon={<SettingsIcon size={16} />}>
+          <Button
+            size="sm"
+            leftIcon={<SettingsIcon size={16} />}
+            data-testid="settings-button"
+          >
             Settings
           </Button>
         </PopoverTrigger>
@@ -69,6 +73,7 @@ export function SettingsPopover(props: Props) {
                 isChecked={colorMode === "dark"}
                 onChange={toggleColorMode}
                 id="is-dark-mode"
+                data-testid="dark-mode-switch"
               />
             </FormControl>
             <FormControl
@@ -91,12 +96,14 @@ export function SettingsPopover(props: Props) {
                   icon={<SmartphoneIcon size={16} />}
                   isActive={isSmartphoneView.value}
                   onClick={() => isSmartphoneView.set(true)}
+                  data-testid="smartphone-button"
                 />
                 <IconButton
                   aria-label="Laptop"
                   icon={<LaptopIcon size={16} />}
                   isActive={!isSmartphoneView.value}
                   onClick={() => isSmartphoneView.set(false)}
+                  data-testid="laptop-button"
                 />
               </ButtonGroup>
             </FormControl>

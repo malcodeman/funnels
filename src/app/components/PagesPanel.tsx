@@ -120,12 +120,18 @@ export function PagesPanel(props: Props) {
               blocks: [],
             })
           }
+          data-testid="add-page-button"
         >
           Add page
         </Button>
       </Box>
       {pages.map((page, i) => (
-        <AccordionItem key={page.id} borderTop="0" borderBottom="0">
+        <AccordionItem
+          key={page.id}
+          borderTop="0"
+          borderBottom="0"
+          data-testid="page-accordion-item"
+        >
           <AccordionButton>
             <Text flexGrow="1" textAlign="left">
               Page {i + 1}
