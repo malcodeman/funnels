@@ -16,11 +16,13 @@ import {
   MousePointerClickIcon,
   PlusIcon,
   TextIcon,
+  VideoIcon,
 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { Fragment } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { isEmpty, map } from "remeda";
+import { SiLoom } from "@icons-pack/react-simple-icons";
 
 type Props = {
   selectedPageIndex: number;
@@ -102,6 +104,38 @@ export function PagesPanel(props: Props) {
           onClick={() => onSelectBlock(block)}
         >
           {isEmpty(block.text) ? "Button" : block.text}
+        </Button>
+      );
+    }
+
+    if (block.type === "video") {
+      return (
+        <Button
+          leftIcon={<VideoIcon size={16} />}
+          variant="ghost"
+          justifyContent="flex-start"
+          overflowX="hidden"
+          size="sm"
+          isActive={selectedBlock?.id === block.id}
+          onClick={() => onSelectBlock(block)}
+        >
+          Video
+        </Button>
+      );
+    }
+
+    if (block.type === "loom") {
+      return (
+        <Button
+          leftIcon={<SiLoom size={16} />}
+          variant="ghost"
+          justifyContent="flex-start"
+          overflowX="hidden"
+          size="sm"
+          isActive={selectedBlock?.id === block.id}
+          onClick={() => onSelectBlock(block)}
+        >
+          Loom
         </Button>
       );
     }

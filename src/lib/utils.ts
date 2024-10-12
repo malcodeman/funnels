@@ -17,3 +17,12 @@ export function file2Text(file: File) {
     reader.onerror = (error) => reject(error);
   });
 }
+
+export function isValidUrl(url: string) {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}

@@ -33,7 +33,25 @@ export type ButtonBlock = {
   bgColor: string;
 };
 
-export type Block = TextBlock | ImageBlock | ListBlock | ButtonBlock;
+export type VideoBlock = {
+  id: string;
+  type: "video";
+  src: string;
+};
+
+export type LoomBlock = {
+  id: string;
+  type: "loom";
+  src: string;
+};
+
+export type Block =
+  | TextBlock
+  | ImageBlock
+  | ListBlock
+  | ButtonBlock
+  | VideoBlock
+  | LoomBlock;
 
 export type FunnelData = {
   name: string;

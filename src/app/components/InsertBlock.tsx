@@ -16,9 +16,11 @@ import {
   MoreHorizontalIcon,
   MousePointerClickIcon,
   TextIcon,
+  VideoIcon,
 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { SiLoom } from "@icons-pack/react-simple-icons";
 
 type Props = {
   selectedPageIndex: number;
@@ -32,7 +34,9 @@ export function InsertBlock(props: Props) {
     name: `pages.${selectedPageIndex}.blocks`,
   });
 
-  function handleAddBlock(type: "text" | "image" | "list" | "button") {
+  function handleAddBlock(
+    type: "text" | "image" | "list" | "button" | "video" | "loom"
+  ) {
     if (type === "text") {
       append({
         type: "text",
@@ -73,6 +77,22 @@ export function InsertBlock(props: Props) {
         text: "Button",
         color: "#fff",
         bgColor: "#0071ec",
+        id: nanoid(),
+      });
+    }
+
+    if (type === "video") {
+      append({
+        type: "video",
+        src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        id: nanoid(),
+      });
+    }
+
+    if (type === "loom") {
+      append({
+        type: "loom",
+        src: "https://www.loom.com/share/2db6438e41b2456db774171a84b03566",
         id: nanoid(),
       });
     }
@@ -121,6 +141,24 @@ export function InsertBlock(props: Props) {
                   onClick={() => handleAddBlock("button")}
                 >
                   Button
+                </Button>
+              </GridItem>
+              <GridItem>
+                <Button
+                  size="sm"
+                  leftIcon={<VideoIcon size={16} />}
+                  onClick={() => handleAddBlock("video")}
+                >
+                  Video
+                </Button>
+              </GridItem>
+              <GridItem>
+                <Button
+                  size="sm"
+                  leftIcon={<SiLoom size={16} />}
+                  onClick={() => handleAddBlock("loom")}
+                >
+                  Loom
                 </Button>
               </GridItem>
             </Grid>

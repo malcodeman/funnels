@@ -1,6 +1,8 @@
 import { useLocalStorage } from "@/hooks/useLocalStorageValue";
+import { isValidUrl } from "@/lib/utils";
 import { Block, FunnelData } from "@/types";
 import {
+  AspectRatio,
   Button,
   Container,
   Flex,
@@ -12,7 +14,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
-import { isEmpty, isNullish, map } from "remeda";
+import { isEmpty, isNullish, last, map, split } from "remeda";
 
 type Props = {
   selectedPageIndex: number;
@@ -76,9 +78,11 @@ export function Preview(props: Props) {
           onClick={() => onSelectBlock(block)}
         >
           {map(block.items, (item) => (
-            <ListItem key={item.id} display="flex" alignItems="center">
-              <ListIcon as={Image} src={item.src} />
-              <Text>{item.title}</Text>
+            <ListItem key={item.id}>
+              <Flex alignItems="center">
+                <ListIcon as={Image} src={item.src} />
+                <Text>{item.title}</Text>
+              </Flex>
               <Text opacity="0.8">{item.description}</Text>
             </ListItem>
           ))}
@@ -99,6 +103,36 @@ export function Preview(props: Props) {
         </Button>
       );
     }
+
+    if (block.type === "video") {
+      return (
+        <video
+          src={block.src}
+          controls
+          style={{
+            outline:
+              selectedBlockId === block.id ? "1px solid #0071ec" : undefined,
+          }}
+        />
+      );
+    }
+
+    if (block.type === "loom") {
+      const videoId = isValidUrl(block.src)
+        ? last(split(new URL(block.src).pathname, "/"))
+        : "";
+
+      return (
+        <AspectRatio
+          ratio={1}
+          outline={
+            selectedBlockId === block.id ? "1px solid #0071ec" : undefined
+          }
+        >
+          <iframe src={`https://www.loom.com/embed/${videoId}`} />
+        </AspectRatio>
+      );
+    }
   }
 
   return (
@@ -113,23 +147,31 @@ export function Preview(props: Props) {
         <Flex
           flexDir="column"
           height="full"
-          gap="4"
-          padding="2"
+          padding="4"
           overflowY="auto"
+          color="#000"
           style={{ backgroundColor: funnelBgColor }}
           transition="background-color 200ms linear"
         >
-          {map(page.blocks, (block) => (
-            <div key={block.id}>{renderBlock(block)}</div>
-          ))}
-          {branding ? (
-            <Text fontSize="sm" textAlign="center" data-testid="branding-text">
-              Powered by{" "}
-              <Text as="span" fontWeight="bold">
-                Funnels
-              </Text>
-            </Text>
-          ) : null}
+          <Container maxW="container.md">
+            <Flex flexDir="column" gap="4">
+              {map(page.blocks, (block) => (
+                <div key={block.id}>{renderBlock(block)}</div>
+              ))}
+              {branding ? (
+                <Text
+                  fontSize="sm"
+                  textAlign="center"
+                  data-testid="branding-text"
+                >
+                  Powered by{" "}
+                  <Text as="span" fontWeight="bold">
+                    Funnels
+                  </Text>
+                </Text>
+              ) : null}
+            </Flex>
+          </Container>
         </Flex>
       </Container>
     </Flex>

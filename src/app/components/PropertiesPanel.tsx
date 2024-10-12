@@ -6,6 +6,8 @@ import { ListBlock } from "./blocks/ListBlock";
 import { TextBlock } from "./blocks/TextBlock";
 import { ImageBlock } from "./blocks/ImageBlock";
 import { ButtonBlock } from "./blocks/ButtonBlock";
+import { VideoBlock } from "./blocks/VideoBlock";
+import { LoomBlock } from "./blocks/LoomBlock";
 
 type Props = {
   selectedPageIndex: number;
@@ -64,6 +66,26 @@ export function PropertiesPanel(props: Props) {
     if (block.type === "button") {
       return (
         <ButtonBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
+      );
+    }
+
+    if (block.type === "video") {
+      return (
+        <VideoBlock
+          pageIndex={selectedPageIndex}
+          blockIndex={blockIndex}
+          block={block}
+        />
+      );
+    }
+
+    if (block.type === "loom") {
+      return (
+        <LoomBlock
           pageIndex={selectedPageIndex}
           blockIndex={blockIndex}
           block={block}
