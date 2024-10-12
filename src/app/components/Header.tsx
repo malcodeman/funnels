@@ -1,4 +1,4 @@
-import { FunnelData } from "@/types";
+import { Block, FunnelData } from "@/types";
 import { Grid, GridItem, useColorModeValue } from "@chakra-ui/react";
 import { WorkflowIcon } from "lucide-react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -8,10 +8,11 @@ import { InsertBlock } from "./InsertBlock";
 type Props = {
   selectedPageIndex: number;
   onImport: (funnel: FunnelData) => void;
+  onSelectBlock: (block: null | Block) => void;
 };
 
 export function Header(props: Props) {
-  const { selectedPageIndex, onImport } = props;
+  const { selectedPageIndex, onImport, onSelectBlock } = props;
   const { control } = useFormContext<FunnelData>();
   const name = useWatch({ control, name: "name" });
   const backgroundColor = useColorModeValue("white", "gray.800");
@@ -37,7 +38,10 @@ export function Header(props: Props) {
         {name}
       </GridItem>
       <GridItem display="flex" justifyContent="center" gap="2">
-        <InsertBlock selectedPageIndex={selectedPageIndex} />
+        <InsertBlock
+          selectedPageIndex={selectedPageIndex}
+          onSelectBlock={onSelectBlock}
+        />
       </GridItem>
       <GridItem display="flex" justifyContent="flex-end">
         <SettingsPopover onImport={onImport} />

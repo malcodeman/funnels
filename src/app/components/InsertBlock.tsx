@@ -1,4 +1,4 @@
-import { FunnelData } from "@/types";
+import { Block, FunnelData } from "@/types";
 import {
   Button,
   Grid,
@@ -24,10 +24,11 @@ import { SiLoom } from "@icons-pack/react-simple-icons";
 
 type Props = {
   selectedPageIndex: number;
+  onSelectBlock: (block: null | Block) => void;
 };
 
 export function InsertBlock(props: Props) {
-  const { selectedPageIndex } = props;
+  const { selectedPageIndex, onSelectBlock } = props;
   const { control } = useFormContext<FunnelData>();
   const { append } = useFieldArray({
     control,
@@ -38,27 +39,33 @@ export function InsertBlock(props: Props) {
     type: "text" | "image" | "list" | "button" | "video" | "loom"
   ) {
     if (type === "text") {
-      append({
-        type: "text",
+      const block = {
+        type: "text" as const,
         text: "Text",
         color: "#000",
-        align: "left",
+        align: "left" as const,
         size: "14",
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
 
     if (type === "image") {
-      append({
-        type: "image",
+      const block = {
+        type: "image" as const,
         src: "",
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
 
     if (type === "list") {
-      append({
-        type: "list",
+      const block = {
+        type: "list" as const,
         items: [
           {
             title: "Title",
@@ -68,33 +75,45 @@ export function InsertBlock(props: Props) {
           },
         ],
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
 
     if (type === "button") {
-      append({
-        type: "button",
+      const block = {
+        type: "button" as const,
         text: "Button",
         color: "#fff",
         bgColor: "#0071ec",
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
 
     if (type === "video") {
-      append({
-        type: "video",
+      const block = {
+        type: "video" as const,
         src: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
 
     if (type === "loom") {
-      append({
-        type: "loom",
+      const block = {
+        type: "loom" as const,
         src: "https://www.loom.com/share/2db6438e41b2456db774171a84b03566",
         id: nanoid(),
-      });
+      };
+
+      append(block);
+      onSelectBlock(block);
     }
   }
 

@@ -47,6 +47,7 @@ export default function Home() {
         <Header
           selectedPageIndex={selectedPageIndex}
           onImport={handleOnImport}
+          onSelectBlock={(block) => setSelectedBlock(block)}
         />
       </FormProvider>
       <Box
