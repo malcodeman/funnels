@@ -1,7 +1,6 @@
 "use client";
 import { FUNNEL_DATA, HEADER_HEIGHT } from "@/lib/constants";
-import { Block, FunnelData } from "@/types";
-import { useState } from "react";
+import { FunnelData } from "@/types";
 import {
   Box,
   Tab,
@@ -12,6 +11,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
+import { useBlockStore, usePageIndexStore } from "@/state";
 import { Preview } from "./components/Preview";
 import { Header } from "./components/Header";
 import { PagesPanel } from "./components/PagesPanel";
@@ -20,8 +20,8 @@ import { PropertiesPanel } from "./components/PropertiesPanel";
 import { EmptyState } from "./components/EmptyState";
 
 export default function Home() {
-  const [selectedPageIndex, setSelectedPageIndex] = useState(1);
-  const [selectedBlock, setSelectedBlock] = useState<null | Block>(null);
+  const { setSelectedPageIndex } = usePageIndexStore();
+  const { setSelectedBlock } = useBlockStore();
   const form = useForm<FunnelData>({
     defaultValues: FUNNEL_DATA,
   });
@@ -44,11 +44,7 @@ export default function Home() {
   return (
     <>
       <FormProvider {...form}>
-        <Header
-          selectedPageIndex={selectedPageIndex}
-          onImport={handleOnImport}
-          onSelectBlock={(block) => setSelectedBlock(block)}
-        />
+        <Header />
       </FormProvider>
       <Box
         top={HEADER_HEIGHT}
@@ -68,12 +64,7 @@ export default function Home() {
           <TabPanels height="full" overflowY="scroll" pb="42px">
             <TabPanel padding="0">
               <FormProvider {...form}>
-                <PagesPanel
-                  selectedPageIndex={selectedPageIndex}
-                  selectedBlock={selectedBlock}
-                  onSelectPage={(index) => setSelectedPageIndex(index)}
-                  onSelectBlock={(block) => setSelectedBlock(block)}
-                />
+                <PagesPanel />
               </FormProvider>
             </TabPanel>
             <TabPanel>
@@ -85,17 +76,10 @@ export default function Home() {
         </Tabs>
       </Box>
       <FormProvider {...form}>
-        <Preview
-          selectedPageIndex={selectedPageIndex}
-          selectedBlockId={selectedBlock?.id}
-          onSelectBlock={(block) => setSelectedBlock(block)}
-        />
+        <Preview />
       </FormProvider>
       <FormProvider {...form}>
-        <PropertiesPanel
-          selectedPageIndex={selectedPageIndex}
-          selectedBlock={selectedBlock}
-        />
+        <PropertiesPanel />
       </FormProvider>
     </>
   );

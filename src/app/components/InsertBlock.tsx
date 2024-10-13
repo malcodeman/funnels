@@ -1,4 +1,4 @@
-import { Block, FunnelData } from "@/types";
+import { FunnelData } from "@/types";
 import {
   Button,
   Grid,
@@ -21,14 +21,11 @@ import {
 import { nanoid } from "nanoid";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { SiLoom } from "@icons-pack/react-simple-icons";
+import { useBlockStore, usePageIndexStore } from "@/state";
 
-type Props = {
-  selectedPageIndex: number;
-  onSelectBlock: (block: null | Block) => void;
-};
-
-export function InsertBlock(props: Props) {
-  const { selectedPageIndex, onSelectBlock } = props;
+export function InsertBlock() {
+  const { selectedPageIndex } = usePageIndexStore();
+  const { setSelectedBlock } = useBlockStore();
   const { control } = useFormContext<FunnelData>();
   const { append } = useFieldArray({
     control,
@@ -49,7 +46,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
 
     if (type === "image") {
@@ -60,7 +57,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
 
     if (type === "list") {
@@ -78,7 +75,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
 
     if (type === "button") {
@@ -91,7 +88,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
 
     if (type === "video") {
@@ -102,7 +99,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
 
     if (type === "loom") {
@@ -113,7 +110,7 @@ export function InsertBlock(props: Props) {
       };
 
       append(block);
-      onSelectBlock(block);
+      setSelectedBlock(block);
     }
   }
 

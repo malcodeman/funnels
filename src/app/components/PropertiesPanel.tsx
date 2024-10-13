@@ -8,14 +8,11 @@ import { ImageBlock } from "./blocks/ImageBlock";
 import { ButtonBlock } from "./blocks/ButtonBlock";
 import { VideoBlock } from "./blocks/VideoBlock";
 import { LoomBlock } from "./blocks/LoomBlock";
+import { useBlockStore, usePageIndexStore } from "@/state";
 
-type Props = {
-  selectedPageIndex: number;
-  selectedBlock: null | Block;
-};
-
-export function PropertiesPanel(props: Props) {
-  const { selectedPageIndex, selectedBlock } = props;
+export function PropertiesPanel() {
+  const { selectedPageIndex } = usePageIndexStore();
+  const { selectedBlock } = useBlockStore();
   const { control } = useFormContext<FunnelData>();
   const pages = useWatch({
     control,

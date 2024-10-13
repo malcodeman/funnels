@@ -23,17 +23,11 @@ import { Fragment } from "react";
 import { useFieldArray, useFormContext, useWatch } from "react-hook-form";
 import { isEmpty, map } from "remeda";
 import { SiLoom } from "@icons-pack/react-simple-icons";
+import { useBlockStore, usePageIndexStore } from "@/state";
 
-type Props = {
-  selectedPageIndex: number;
-  selectedBlock: null | Block;
-  onSelectPage: (index: number) => void;
-  onSelectBlock: (block: null | Block) => void;
-};
-
-export function PagesPanel(props: Props) {
-  const { selectedPageIndex, selectedBlock, onSelectPage, onSelectBlock } =
-    props;
+export function PagesPanel() {
+  const { selectedBlock, setSelectedBlock } = useBlockStore();
+  const { selectedPageIndex, setSelectedPageIndex } = usePageIndexStore();
   const { control } = useFormContext<FunnelData>();
   const { append } = useFieldArray({
     control,
@@ -54,7 +48,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {isEmpty(block.text) ? "Text" : block.text}
         </Button>
@@ -70,7 +64,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {isEmpty(block.alt) ? "Image" : block.alt}
         </Button>
@@ -85,7 +79,7 @@ export function PagesPanel(props: Props) {
           justifyContent="flex-start"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           List
         </Button>
@@ -101,7 +95,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {isEmpty(block.text) ? "Button" : block.text}
         </Button>
@@ -117,7 +111,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           Video
         </Button>
@@ -133,7 +127,7 @@ export function PagesPanel(props: Props) {
           overflowX="hidden"
           size="sm"
           isActive={selectedBlock?.id === block.id}
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           Loom
         </Button>
@@ -142,7 +136,7 @@ export function PagesPanel(props: Props) {
   }
 
   return (
-    <Accordion index={selectedPageIndex} onChange={onSelectPage} pb="5">
+    <Accordion index={selectedPageIndex} onChange={setSelectedPageIndex} pb="5">
       <Box paddingX="4" paddingY="2">
         <Button
           size="sm"

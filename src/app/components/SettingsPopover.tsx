@@ -25,19 +25,23 @@ import { exportAsJson } from "@/lib/utils";
 import { useFormContext } from "react-hook-form";
 import { FunnelData } from "@/types";
 import { useLocalStorage } from "@/hooks/useLocalStorageValue";
+import { useBlockStore, usePageIndexStore } from "@/state";
 
-type Props = {
-  onImport: (funnel: FunnelData) => void;
-};
-
-export function SettingsPopover(props: Props) {
-  const { onImport } = props;
+export function SettingsPopover() {
+  const { setSelectedPageIndex } = usePageIndexStore();
+  const { setSelectedBlock } = useBlockStore();
   const { colorMode, toggleColorMode } = useColorMode();
-  const { getValues } = useFormContext<FunnelData>();
+  const { reset, getValues } = useFormContext<FunnelData>();
   const [isOpen, setIsOpen] = useBoolean();
   const isSmartphoneView = useLocalStorage("is-smartphone-view", {
     defaultValue: true,
   });
+
+  function handleOnImport(funnel: FunnelData) {
+    reset(funnel);
+    setSelectedPageIndex(1);
+    setSelectedBlock(null);
+  }
 
   return (
     <>
@@ -132,7 +136,7 @@ export function SettingsPopover(props: Props) {
         </PopoverContent>
       </Popover>
       <ImportJsonModal
-        onImport={onImport}
+        onImport={handleOnImport}
         isOpen={isOpen}
         onClose={setIsOpen.off}
       />

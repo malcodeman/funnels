@@ -15,15 +15,11 @@ import {
 } from "@chakra-ui/react";
 import { useFormContext, useWatch } from "react-hook-form";
 import { isEmpty, isNullish, last, map, split } from "remeda";
+import { useBlockStore, usePageIndexStore } from "@/state";
 
-type Props = {
-  selectedPageIndex: number;
-  selectedBlockId: string | undefined;
-  onSelectBlock: (block: null | Block) => void;
-};
-
-export function Preview(props: Props) {
-  const { selectedPageIndex, selectedBlockId, onSelectBlock } = props;
+export function Preview() {
+  const { selectedPageIndex } = usePageIndexStore();
+  const { selectedBlock, setSelectedBlock } = useBlockStore();
   const { control } = useFormContext<FunnelData>();
   const page = useWatch({ control, name: "pages" })[selectedPageIndex];
   const branding = useWatch({ control, name: "branding" });
@@ -32,6 +28,7 @@ export function Preview(props: Props) {
   const isSmartphoneView = useLocalStorage("is-smartphone-view", {
     defaultValue: true,
   });
+  const selectedBlockId = selectedBlock?.id;
 
   if (!page) {
     return null;
@@ -49,7 +46,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {block.text}
         </Text>
@@ -64,7 +61,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         />
       );
     }
@@ -75,7 +72,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {map(block.items, (item) => (
             <ListItem key={item.id}>
@@ -97,7 +94,7 @@ export function Preview(props: Props) {
           outline={
             selectedBlockId === block.id ? "1px solid #0071ec" : undefined
           }
-          onClick={() => onSelectBlock(block)}
+          onClick={() => setSelectedBlock(block)}
         >
           {block.text}
         </Button>
