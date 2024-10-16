@@ -105,7 +105,7 @@ export function InsertBlock() {
     if (type === "loom") {
       const block = {
         type: "loom" as const,
-        src: "https://www.loom.com/share/2db6438e41b2456db774171a84b03566",
+        src: "",
         id: nanoid(),
       };
 
