@@ -1,4 +1,4 @@
-# [funnels](https://funnels-alpha.vercel.app)
+# funnels
 
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/malcodeman/funnels/blob/master/LICENSE)
