@@ -26,7 +26,7 @@
     "react-dom": "^18",
     "react-dropzone": "^14.2.9",
     "react-hook-form": "^7.53.0",
-    "remeda": "^2.15.0",
+    "remeda": "^2.17.4",
     "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"
   },
