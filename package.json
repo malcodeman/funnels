@@ -18,7 +18,7 @@
     "@icons-pack/react-simple-icons": "^10.0.0",
     "@react-hookz/web": "^24.0.4",
     "file-saver": "^2.0.5",
-    "framer-motion": "^11.11.7",
+    "framer-motion": "^12.7.4",
     "lucide-react": "^0.451.0",
     "nanoid": "^5.0.7",
     "next": "14.2.15",
