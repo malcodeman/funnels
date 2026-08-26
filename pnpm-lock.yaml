@@ -24,8 +24,8 @@ importers:
         specifier: ^10.0.0
         version: 10.2.0(react@18.3.1)
       '@react-hookz/web':
-        specifier: ^25.1.1
-        version: 25.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^26.1.0
+        version: 26.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -389,8 +389,8 @@ packages:
   '@popperjs/core@2.11.8':
     resolution: {integrity: sha512-P1st0aksCrn9sGZhp8GMYwBnQsbvAWsZAX44oXNNvLHGqAOcoVxmjZiohstwQ7SqKnbR47akdNi+uleWD8+g6A==}
 
-  '@react-hookz/web@25.1.1':
-    resolution: {integrity: sha512-o1BA+5Z8PCuAnxF7+2TZI+xGBtzyLw8z/flD8AMeJXILYTM8HkI0g41oM7IW/qjUDKx30HKceQQpCKqFGj+iIw==}
+  '@react-hookz/web@26.1.0':
+    resolution: {integrity: sha512-GKErtGGoaPNWc8rp4SE/rVgJT1kJ/3s6n3q+Vs6DM4TRVsLqbsIGU9u3jTwcV3tCYgxAwz9DqJZxCaal89Lxqg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       js-cookie: ^3.0.5
@@ -609,9 +609,9 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@ver0/deep-equal@1.0.0':
-    resolution: {integrity: sha512-XKIlF1i6UJiyTL52mDrSDDgRX7Qr5yJ7ts9zn2liZEmhiAEum4XKrJRAWmHdFwCQeGBU+rb+/b0ldw/9V8lOWw==}
-    engines: {node: '>=18'}
+  '@ver0/deep-equal@2.0.1':
+    resolution: {integrity: sha512-JVSbDwzKASqorJum+ATnnZNIkni4K4G3aeJDsTgEhHcm0CiCwAVaLbhFByeNAir1HExEWjHxhIXVR+d8ZzeJGw==}
+    engines: {node: '>=20'}
 
   '@zag-js/dom-query@0.31.1':
     resolution: {integrity: sha512-oiuohEXAXhBxpzzNm9k2VHGEOLC1SXlXSbRPcfBZ9so5NRQUA++zCE7cyQJqGLTZR0t3itFLlZqDbYEXRrefwg==}
@@ -2394,9 +2394,9 @@ snapshots:
 
   '@popperjs/core@2.11.8': {}
 
-  '@react-hookz/web@25.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@react-hookz/web@26.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@ver0/deep-equal': 1.0.0
+      '@ver0/deep-equal': 2.0.1
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -2597,7 +2597,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@ver0/deep-equal@1.0.0': {}
+  '@ver0/deep-equal@2.0.1': {}
 
   '@zag-js/dom-query@0.31.1': {}
 
